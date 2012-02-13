@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2010 the original author or authors.
+ * Copyright 2009-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,8 @@
  * @author Andres Almiray
  */
 
-boolean addonIsSet1
-builderConfig.each() { prefix, v ->
-    v.each { builder, views ->
-        addonIsSet1 = addonIsSet1 || 'griffon.builder.swingxtras.SwingxtrasBuilder' == builder
-    }
+def configText = """root.'griffon.builder.swingxtras.SwingxtrasBuilder'.view = '*'"""
+if(builderConfigFile.text.contains(configText)) {
+    println 'Removing SwingxtrasBuilder from Builder.groovy'
+    builderConfigFile.text -= configText
 }
-
-if(addonIsSet1) {
-    builderConfigFile.text = builderConfigFile.text - "root.'griffon.builder.swingxtras.SwingxtrasBuilder'.view = '*'\n"
-}
-
